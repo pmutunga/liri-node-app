@@ -76,6 +76,6 @@ For Do-what-it-says, LIRI uses the fs Node package to take the text inside of ra
 
 In addition to logging the data to your terminal/bash window, the search data is saved in log.txt
 
-![log](./images/log.png)
+![log](images/log.png)
 
 
