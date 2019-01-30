@@ -35,31 +35,19 @@ var userSearch = process.argv[3];
 
 
 
-//TO-DO -handle user input that's a sentence - e.g. for movie good will hunting.
+//handle user input that's a sentence - e.g. for movie good will hunting.
 // Get all elements in process.argv, starting from index 3 to the end
 // Join them into a string to get the + delimited user search
 var userSearchArray = [];
 userSearchArray = process.argv.slice(3);
-console.log("user search array is: " + userSearchArray);
-var searchString = userSearchArray.join("-");
-console.log("array to string: " + searchString);
 
-var userMovieSearch = userSearchArray.join("+"); //this works for OMDB but not spotify.
-console.log(userMovieSearch);
-
-
-var userGenericSearch =  userSearchArray.join(" "); //this will work for spotify but not OMDB
-console.log(userGenericSearch);
-
-
-//TO-DO - Create Functions++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Create Functions++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //create function that checks user input and determines what to do.
 
 function processInput(doThis, userSearchArray){
 
-    //how do I pass the value of doThis and searchThis to processInput? - Pass the variables as arguments
-    console.log("User would like to " + doThis + " for " + userSearchArray);
+
     //console.log(inputCommand);
   
    
@@ -71,8 +59,6 @@ function processInput(doThis, userSearchArray){
               concertThis(searchThis);}
               else {
               searchThis = userSearchArray.join(" ");
-              console.log(doThis + " " + searchThis); //test user inputs
-              console.log("concerts coming up"); 
               concertThis(searchThis)}; break;
       case "spotify-this-song":
             //If user has not specified a song , use default
@@ -82,10 +68,6 @@ function processInput(doThis, userSearchArray){
               else {
             // console.log(defaultSong);
               searchThis = userSearchArray.join(" ");
-              console.log(doThis + " " + searchThis); //test user inputs
-              console.log("your search for " + searchThis + " coming up");
-              console.log("run spotifythis function +======================+")
-              //saveSearch(userChoice, searchThis);
               spotifyThis(searchThis)}; break;
       
       case "movie-this":
@@ -95,11 +77,8 @@ function processInput(doThis, userSearchArray){
               else {
             searchThis = userSearchArray.join("+");
             var saveSearchThis= userSearchArray.join(" ");
-            console.log("Save this search " + saveSearchThis);
-            // console.log(doThis + " " + searchThis); //test user inputs
             movieThis(searchThis, saveSearchThis)}; break;
       case "do-what-it-says":
-          console.log(doThis); //test user inputs
           doWhatItSays(); break;
       default: 
       console.log("Invalid command. Please type any of the following commnds: concert-this spotify-this-song movie-this or do-what-it-says");
@@ -121,7 +100,7 @@ function concertThis(searchThis){
     
     //generate concertURL
     var concertURL = "https://rest.bandsintown.com/artists/" + searchThis + "/events?app_id=codingbootcamp"
-    console.log(concertURL);
+    // console.log(concertURL);
     //Get concert data using request. TO-DO - understand how request works.
 
     request(concertURL, function (error, response, body) {
@@ -129,7 +108,7 @@ function concertThis(searchThis){
       if(error){
         console.log('error:', error); // Print the error if one occurred
       } else {
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         var json= JSON.parse(response.body);
         //console.log(json[0]);
         var thisEvent = json[0];
@@ -160,28 +139,29 @@ function concertThis(searchThis){
 
 function spotifyThis(searchThis){
    
-    console.log(searchThis);
+    // console.log(searchThis);
 
     if(searchThis === undefined){
       searchThis = defaultSong;
-      console.log(searchThis);
+     
     }
 
     //fetch data from spotify api
       spotify.search({ type: 'track', query: searchThis }).then(function(response) {
-      console.log(response); 
+      // console.log(response); 
       
       //saveSearch(userChoice, searchThis, searchData);//save uer search in random.txt using fs
       console.log("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
       //console.log("Artist:" + response.artist "\nThe song's name" + response.songName + "\nA preview link of the song from Spotify" + response.Preview + "\nThe album that the song is from" + response.Album);
       console.log("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|")
+      console.log("\================= LIRI FOUND THIS FOR YOU...==================");
       console.log("Artists: " + response.tracks.items[0].artists[0].name);
       console.log("Song Name: " + response.tracks.items[0].name);
       console.log("Preview URL: " + response.tracks.items[0].preview_url);
-      console.log("Preview URL: " + response.tracks.items[0].preview_url);
+      console.log("Album: " + response.tracks.items[0].album.name);
       console.log("|______________________________________|")
 
-      saveSearchData = "\n" + searchThis + "\n_____________________________" + "\nArtists: " + response.tracks.items[0].artists[0].name + "\nSong Name: " + response.tracks.items[0].name + "\nPreview URL: " + response.tracks.items[0].preview_url + "\n==================================" + "\n";
+      saveSearchData = "\n" + searchThis + "\n_____________________________" + "\nArtists: " + response.tracks.items[0].artists[0].name + "\nSong Name: " + response.tracks.items[0].name + "\nPreview URL: " + response.tracks.items[0].preview_url + "\n==================================" + "\nAlbum: " + response.tracks.items[0].album.name + "\n";
 
       saveSearch(saveSearchData);
 
@@ -254,19 +234,19 @@ function doWhatItSays(){
     } else {
       console.log(data);
       var doWhatArr = data.split(";");
-      console.log(doWhatArr);
+      // console.log(doWhatArr);
 
        // Loop Through the newly created output array
   for (var i = 0; i < doWhatArr.length; i++) {
 
     // Print each element (item) of the array/
-    console.log(doWhatArr[i]);
+    // console.log(doWhatArr[i]);
     var searchdata = doWhatArr[i].split(",");
-    console.log(searchdata[0]);
-    console.log(searchdata[1]);
+    // console.log(searchdata[0]);
+    // console.log(searchdata[1]);
     userChoice = searchdata[0];
     searchThis = searchdata[1];
-    console.log("userchoice: " + userChoice + " userSearchArray: " + userSearchArray);
+    // console.log("userchoice: " + userChoice + " userSearchArray: " + userSearchArray);
     switch(userChoice) {
       case "movie-this":
       movieThis(searchThis); break;
@@ -284,23 +264,6 @@ function doWhatItSays(){
 
 } //end of dowhatitsays()
 
-  //test
-
-//test user input, moment
-function testApp(){
-    console.log(moment().format("LLLL")); //test moment formats
-
-    //test Bands In town api
-    //https://rest.bandsintown.com/artists/drake/events?app_id=codingbootcamp
-    request("https://rest.bandsintown.com/artists/drake/events?app_id=codingbootcamp", function (error, response, body) {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
-  var json = JSON.parse(response.body);
-  console.log(json);
-  console.log("+++++++++++++End of Bands in Town test ++++++++++++++++++++++++++++");
-});
-}
 
 
 //Add search to random.txt
