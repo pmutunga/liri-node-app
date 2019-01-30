@@ -70,7 +70,7 @@ LIRI will search Spotify for songs, and present the following information:
 
 #### Do What it Says
 For Do-what-it-says, LIRI uses the fs Node package to take the text inside of random.txt and then use it to call one of LIRI's commands.
-  ![do-what-it-says](./images/do-what-it-says.png)
+  ![do-what-it-says](images/do-what-it-says.PNG)
 
 ### Log
 
