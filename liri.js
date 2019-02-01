@@ -155,15 +155,18 @@ function spotifyThis(searchThis){
       //console.log("Artist:" + response.artist "\nThe song's name" + response.songName + "\nA preview link of the song from Spotify" + response.Preview + "\nThe album that the song is from" + response.Album);
       console.log("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|")
       console.log("\================= LIRI FOUND THIS FOR YOU...==================");
-      console.log("Artists: " + response.tracks.items[0].artists[0].name);
-      console.log("Song Name: " + response.tracks.items[0].name);
-      console.log("Preview URL: " + response.tracks.items[0].preview_url);
-      console.log("Album: " + response.tracks.items[0].album.name);
+      var songData = response.tracks.items;
+      for(var i=0; i<songData.length; i++){
+      console.log("Artists: " + response.tracks.items[i].artists[0].name);
+      console.log("Song Name: " + response.tracks.items[i].name);
+      console.log("Preview URL: " + response.tracks.items[i].preview_url);
+      console.log("Album: " + response.tracks.items[i].album.name);
       console.log("|______________________________________|")
 
-      saveSearchData = "\n" + searchThis + "\n_____________________________" + "\nArtists: " + response.tracks.items[0].artists[0].name + "\nSong Name: " + response.tracks.items[0].name + "\nPreview URL: " + response.tracks.items[0].preview_url + "\n==================================" + "\nAlbum: " + response.tracks.items[0].album.name + "\n";
+      saveSearchData = "\n" + searchThis + "\n_____________________________" + "\nArtists: " + response.tracks.items[i].artists[0].name + "\nSong Name: " + response.tracks.items[0].name + "\nPreview URL: " + response.tracks.items[i].preview_url + "\n==================================" + "\nAlbum: " + response.tracks.items[0].album.name + "\n";
 
       saveSearch(saveSearchData);
+      }
 
   }); //end of spotify search
 } //end of spotify-this
@@ -279,9 +282,9 @@ function doWhatItSays(){
     
       //random.txt
       // If no error is experienced, we'll log the phrase "Content Added" to our node console.
-      else {
-        console.log("Search Content Added!");
-      }
+      //else {
+        //console.log("Search Content Added!");
+      //}
     });
   }
   
